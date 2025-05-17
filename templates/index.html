@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Route Finder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin: 0.75rem 0 0.25rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1.5rem;
+            background: #007bff;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        /* Styles for map display */
+        .map-container {
+            margin-top: 1.5rem;
+            width: 100%;
+            height: 700px;
+        }
+
+        p.error-message {
+            color: red;
+            margin-top: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        p.distance {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Find Shortest Route</h1>
+        <form action="/" method="POST">
+            <label for="start_lat">Start Latitude:</label>
+            <input type="text" id="start_lat" name="start_lat" required />
+
+            <label for="start_lon">Start Longitude:</label>
+            <input type="text" id="start_lon" name="start_lon" required />
+
+            <label for="end_lat">End Latitude:</label>
+            <input type="text" id="end_lat" name="end_lat" required />
+
+            <label for="end_lon">End Longitude:</label>
+            <input type="text" id="end_lon" name="end_lon" required />
+
+            <button type="submit">Get Route</button>
+        </form>
+
+        {% if map_display %}
+        <p class="distance">Distance: {{ distance | round(2) }} km</p>
+        <div class="map-container">
+            <iframe src="{{ url_for('static', filename=map_file) }}" width="100%" height="100%"
+                style="border:none;"></iframe>
+        </div>
+        {% elif error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
