@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
 from routing_utils import init_client, get_route, create_map
+from routing_utils import init_client, get_route, create_map
 
 app = Flask(__name__)
 # Replace with your actual OpenRouteService API key
-client = init_client('5b3ce3597851110001cf6248749418dba9354818bb14723910d29e6f')
+client = init_client()
 
 @app.route("/", methods=["GET", "POST"])
 def home():

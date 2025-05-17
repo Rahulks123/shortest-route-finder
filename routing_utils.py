@@ -1,8 +1,14 @@
+import os
 import openrouteservice
 import folium
 
-def init_client(api_key):
+def init_client():
+    api_key = os.getenv("ORS_API_KEY")  # get API key from env variable
+    if not api_key:
+        raise ValueError("No OpenRouteService API key found. Set ORS_API_KEY environment variable.")
     return openrouteservice.Client(key=api_key)
+
+# rest of your code...
 
 def get_route(client, coords):
     try:
